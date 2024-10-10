@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 2</title>
+    <style>
+        /* Disable the link initially */
+        a.disabled {
+            pointer-events: none;
+            color: grey;
+            text-decoration: none;
+        }
+
+        #message {
+            color: red;
+            font-size: 1.5rem;
+        }
+    </style>
+    <script>
+        window.onload = function () {
+            const editorLink = document.getElementById('editor-link');
+            const message = document.getElementById('message');
+            
+            // Initially disable the link
+            editorLink.classList.add('disabled');
+            message.textContent = 'Please read the instructions carefully and wait 15 seconds';
+
+            // After 15 seconds, enable the link and update the message
+            setTimeout(function () {
+                editorLink.classList.remove('disabled');
+                message.textContent = '';
+            }, 10000); // 15 seconds
+        }
+    </script>
+</head>
+
+<body>
+    Today we will be learning how to use the custom editor I coded.
+    This is mostly the same in what you will use if you choose to pursue coding.
+    <br><br>
+    When you get into the editor, it will tell you the features. Please read that page carefully.
+    <br><br>
+    READ THIS BELOW:
+    <br>
+    Instructions:
+    Figure out how to create a website within this site. The url should be <code>clever.com</code>.
+    <br><br>
+    Do This: <br>
+    1. create an element with the tag <code>iframe</code><br>
+    2. set the src to <code>clever.com</code>
+    <br><br>
+    BONUS: Set the width and height to <code>100%</code> (hint: css)
+    <br><br>
+    <b>Please do not google this</b>
+    <br><br>
+
+    <span id="message"></span> <!-- Display the "Please read" message here -->
+    <br>
+    <a id="editor-link" href="/monaco.html" target="_blank">Click here to open the editor</a>
+</body>
+
+</html>

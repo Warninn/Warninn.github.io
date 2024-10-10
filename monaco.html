@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Local Static Code Editor with Live Preview</title>
+    <style>
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+            display: flex;
+        }
+
+        #editor-container {
+            width: 50%;
+            height: 100%;
+            position: relative;
+        }
+
+        #preview-container {
+            width: 50vw;
+            height: 100%;
+            position: relative;
+            border-left: 2px solid #000;
+        }
+
+        #preview {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* Style for the save button */
+        #save-button {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        #save-button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="editor-container"></div>
+    <div id="preview-container">
+        <iframe id="preview"></iframe>
+        <button id="save-button">Save to Device</button> <!-- Save button -->
+    </div>
+
+    <!-- Load Monaco and Emmet -->
+    <script src="monaco-editor/min/vs/loader.js"></script>
+    <script>
+        require.config({ paths: { 'vs': 'https://cdn.jsdelivr.net/npm/monaco-editor@0.34.1/min/vs' } });
+        require(['vs/editor/editor.main'], function () {
+            var script = document.createElement('script');
+            script.src = 'https://unpkg.com/emmet-monaco-es@5.3.2/dist/emmet-monaco.min.js';
+            script.onload = function () {
+                var editor = monaco.editor.create(document.getElementById('editor-container'), {
+                    value: [
+                        '<!DOCTYPE html>',
+                        '<html>',
+                        '<head>',
+                        '   <title>Coding Club HTML Editor</title>',
+                        '   <style>',
+                        '       @keyframes a {',
+                        '           to { background-position: 0 -200%; }',
+                        '       }',
+                        '       h1 {',
+                        '           font-size: 2.5em;',
+                        '           text-align: center;',
+                        '           background: linear-gradient(90deg, rgba(255, 0, 0, 1) 0%, rgba(255, 154, 0, 1) 10%, rgba(208, 222, 33, 1) 20%, rgba(79, 220, 74, 1) 30%, rgba(63, 218, 216, 1) 40%, rgba(47, 201, 226, 1) 50%, rgba(28, 127, 238, 1) 60%, rgba(95, 21, 242, 1) 70%, rgba(186, 12, 248, 1) 80%, rgba(251, 7, 217, 1) 90%, rgba(255, 0, 0, 1) 100%) 0 0;',
+                        '           -webkit-background-clip: text;',
+                        '           color: transparent;',
+                        '           background-size: 100% 200%;',
+                        '           animation: a 2s linear infinite;',
+                        '       }',
+                        '   </style>',
+                        '</head>',
+                        '<body>',
+                        '   <h1>Welcome to the coding club!</h1>',
+                        '   <h3><b>PLEASE READ ALL INSTRUCTIONS FROM THE LAST PAGE BEFORE STARTING</b></h3>',
+                        '   <p>This is a basic html editor that I designed to help you learn HTML, CSS, and JavaScript. </p>',
+                        '   <hr>',
+                        '   <p>Features:</p>',
+                        '   <ol>',
+                        '       <li>Press Ctrl+S to save to the browser&apos;s storage</li>',
+                        '       <li>Press the save to device button at the end of each session so you don&apos;t lose your work</li>',
+                        '       <li>Use Emmet to code faster</li>',
+                        '       <li>Use the live preview on the right pane to see your code</li>',
+                        '       <li>Right click and click format document to make your code look nice</li>',
+                        '   </ol>',
+                        '</body>',
+                        '</html>'
+                    ].join('\n'),
+                    language: 'html',
+                    theme: 'vs-dark',
+                    automaticLayout: true,
+                    scrollBeyondLastLine: false,
+                    minimap: { enabled: false },
+                    wordWrap: 'on',
+                    wrappingStrategy: 'advanced',
+                    lineNumbers: 'on',
+                    folding: true,
+                    foldingStrategy: 'indentation',
+                    renderWhitespace: 'all',
+                    renderLineHighlight: 'all',
+                    scrollbar: {
+                        vertical: 'visible',
+                        horizontal: 'visible',
+                        useShadows: false,
+                        verticalHasArrows: true,
+                        horizontalHasArrows: true,
+                        horizontalScrollbarSize: 12,
+                        verticalScrollbarSize: 12
+                    }
+                });
+
+                // Initialize Emmet
+                emmetMonaco.emmetHTML(monaco);
+                console.log('Emmet initialized successfully.');
+
+                // Load saved code from localStorage
+                function loadCode() {
+                    const savedCode = localStorage.getItem('editorCode');
+                    if (savedCode) {
+                        editor.setValue(savedCode);
+                    }
+                }
+
+                // Save code to localStorage
+                function saveCode() {
+                    const code = editor.getValue();
+                    localStorage.setItem('editorCode', code);
+                    console.log('Code saved to localStorage.');
+                }
+
+                // Function to download the code as an HTML file
+                function downloadFile() {
+                    const code = editor.getValue();
+                    const blob = new Blob([code], { type: 'text/html' });
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = 'index.html';
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
+                }
+
+                // Live preview logic
+                function updatePreview() {
+                    var previewFrame = document.getElementById('preview');
+                    var preview = previewFrame.contentDocument || previewFrame.contentWindow.document;
+                    preview.open();
+                    preview.write(editor.getValue());
+                    preview.close();
+                }
+
+                // Update preview when content changes
+                editor.onDidChangeModelContent(function () {
+                    updatePreview();
+                });
+
+                // Force layout update on window resize
+                window.addEventListener('resize', function () {
+                    editor.layout();
+                });
+
+                // Event listener for Cmd + S
+                window.addEventListener('keydown', function (event) {
+                    if ((event.metaKey || event.ctrlKey) && event.key === 's') {
+                        event.preventDefault(); // Prevent default save dialog
+                        saveCode();
+                        alert('Your code has been saved to the browser. If you clear your cookies, this will delete. Please save to device every so often.');
+                    }
+                });
+
+                // Event listener for save button
+                document.getElementById('save-button').addEventListener('click', function () {
+                    saveCode(); // Save to localStorage
+                    downloadFile(); // Download the file
+                });
+
+                // Save code every 3 minutes
+                setInterval(saveCode, 3 * 60 * 1000);
+
+                // Load previously saved code on startup
+                loadCode();
+
+                // Initial preview update
+                updatePreview();
+            };
+            document.body.appendChild(script);
+        });
+    </script>
+</body>
+
+</html>

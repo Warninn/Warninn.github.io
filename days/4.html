@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson</title>
+    <style>
+        /* Disable the link initially */
+        a.disabled {
+            pointer-events: none;
+            color: grey;
+            text-decoration: none;
+        }
+
+        #message {
+            color: red;
+            font-size: 1.5rem;
+        }
+    </style>
+    <script>
+        window.onload = function () {
+            const editorLink = document.getElementById('editor-link');
+            const message = document.getElementById('message');
+
+            // Initially disable the link
+            editorLink.classList.add('disabled');
+            message.textContent = 'Please read the instructions carefully and wait 15 seconds';
+
+            // After 15 seconds, enable the link and update the message
+            setTimeout(function () {
+                editorLink.classList.remove('disabled');
+                message.textContent = '';
+            }, 10000); // 15 seconds
+        }
+    </script>
+</head>
+
+<body>
+    <center>
+        <h1>Some HTML tags that are helpful</h1>
+    </center>
+
+
+    <div>
+        <code>&lt;center&gt;</code>
+        <p>This tag is used to center align the content within its parent element.</p>
+        <p>Warning: This tag is not supported in all browsers and that's why it may be colored red when you type it.</p>
+        <br>
+    </div>
+    <hr>
+    <div>
+        <code>&lt;marquee&gt;</code>
+        <p>this tag is used to create scrolling text.</p>
+        <p>Warning: &lt;marquee&gt; elements must not be present because they are deprecated, increase difficulty for
+            users with limited dexterity, and are distracting for users with cognitive or attention deficits.</p>
+        <br>
+        <marquee behavior="scroll" direction="right">EXAMPLE</marquee>
+        <br>
+    </div>
+    <hr>
+    <div>
+        <code>&lt;div&gt;</code>
+        <p>this tag divides up code so your code can look clean</p>
+        <p>It does nothing unless css or JavaScript is added to it.</p>
+        <p>good code does not overuse divs but does not underuse divs. think of it like groups of code that look good in
+            these bunches</p>
+        <br>
+    </div>
+    <hr>
+
+    <div>
+        <code>&lt;a&gt;</code>
+        <p>a stands for anchor link</p>
+        <p>this is a link to another page or website</p>
+        <p>href is the element you pass in to where you want to go and target is the way you want to open the link, in a new tab with _blank or _self in the same tab</p>
+
+        <p>Example</p>
+        <h5>CODE:</h5>
+        <code>
+            &lt;a href="https://www.google.com" target="_blank"&gt;Google&lt;/a&gt;
+        </code>
+<br>
+
+        <h5>Result:</h5>
+        <a href="https://www.google.com" target="_blank">Google</a>
+        <br>
+    </div>
+
+
+
+    <hr>
+
+<div>
+    <h1>Today's Mission</h1>
+    <p>Use the editor to use all of these elements and play around with them to see what you can do.</p>
+    <p>when you are done, please play this on your computer on MUTE: https://youtu.be/x-LhXsDv0f8?list=PLNOhvqcJZLWjXdfJK4wCfZVzxq0VyCpoh</p>
+</div>
+
+
+
+
+    <br><br>
+    <span id="message"></span> <!-- Display the "Please read" message here -->
+    <br>
+    <a id="editor-link" href="/monaco.html" target="_blank">Click here to open the editor</a>
+</body>
+
+</html>

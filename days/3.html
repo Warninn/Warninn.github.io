@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 2.5</title>
+    <style>
+        /* Disable the link initially */
+        a.disabled {
+            pointer-events: none;
+            color: grey;
+            text-decoration: none;
+        }
+
+        #message {
+            color: red;
+            font-size: 1.5rem;
+        }
+    </style>
+    <script>
+        window.onload = function () {
+            const editorLink = document.getElementById('editor-link');
+            const message = document.getElementById('message');
+            
+            // Initially disable the link
+            editorLink.classList.add('disabled');
+            message.textContent = 'Please read the instructions carefully and wait 15 seconds';
+
+            // After 15 seconds, enable the link and update the message
+            setTimeout(function () {
+                editorLink.classList.remove('disabled');
+                message.textContent = '';
+            }, 10000); // 15 seconds
+        }
+    </script>
+</head>
+
+<body>
+    HTML defines six levels of headings, and these heading elements are H1, H2, H3, H4, H5, and H6. The H1 element is the highest or most important level, and the H6 element is the least important.
+<br><br>
+These different heading levels help to communicate the organization and hierarchy of the content on a page. For example, headings with an equal or higher ranking indicate the start of a new section, and headings with a lower rank indicate the start of a new subsection that is part of a higher-ranked section.
+<br><br>
+
+<p>a heading is represented by <code>&lt;h1&gt;</code> to <code>&lt;h6&gt;</code> tags.</p>
+    
+
+    <h1>Largest Heading &lt;h1&gt;</h1>
+    
+    <h2>Large Heading &lt;h2&gt;</h2>
+    
+    <h3>Medium Heading &lt;h3&gt;</h3>
+    
+    <h4>Small Heading &lt;h4&gt;</h4>
+    
+    <h5>Smaller Heading &lt;h5&gt;</h5>
+    
+    <h6>Tiny Heading &lt;h6&gt;</h6>
+
+
+<br><hr><br>
+
+
+    and there are 2 types of lists, ordered and unordered.
+<br>
+    represented by <code>&lt;ol&gt;</code> and <code>&lt;ul&gt;</code> tags.
+<br>
+Inside either type of list, the list items are represented by <code>&lt;li&gt;</code> tags.
+<code>li</code> stands for list item.
+
+<br><br>
+Ordered list:
+<ol>
+    <li>Item 1</li>
+    <li>Item 2</li>
+    <li>Item 3</li>
+</ol>
+<br><br>
+Unordered list:
+<ul>
+    <li>Item 1</li>
+    <li>Item 2</li>
+    <li>Item 3</li>
+</ul>
+
+
+CODE:
+<code>
+    &lt;ol&gt;<br>
+        &lt;li&gt;Item 1&lt;/li&gt;<br>
+        &lt;li&gt;Item 2&lt;/li&gt;<br>
+        &lt;li&gt;Item 3&lt;/li&gt;<br>
+    &lt;/ol&gt;<br><br>
+
+    
+    &lt;ul&gt;<br>
+        &lt;li&gt;Item 1&lt;/li&gt;<br>
+        &lt;li&gt;Item 2&lt;/li&gt;<br>
+        &lt;li&gt;Item 3&lt;/li&gt;<br>
+    &lt;/ul&gt;
+</code>
+
+
+
+
+
+    <br><br>
+    <span id="message"></span> <!-- Display the "Please read" message here -->
+    <br>
+    <a id="editor-link" href="/monaco.html" target="_blank">Click here to open the editor</a>
+</body>
+
+</html>
